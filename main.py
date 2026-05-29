@@ -8,10 +8,42 @@ def calculadora(num1: float, num2: float, operador: str) -> float:
     sinalizando que o cálculo não pôde ser realizado.
     """
     result = float("nan")
+
     if operador == '+':
         result = num1 + num2
+    elif operador == '-':
+        result = num1 - num2
+    elif operador == '*':
+        result = num1 * num2
+    elif operador == '/':
+        if num2 == 0:
+            return "Erro: divisão por zero"
+        result = num1 / num2
+    elif operador == '**':
+        result = num1 ** num2
+    elif operador == '%':
+        if num2 == 0:
+            return "Erro: módulo por zero"
+        result = num1 % num2
 
     return result
+
+
+# ➕ Segunda função com a mesma assinatura, abordagem diferente
+def calculadora2(num1: float, num2: float, operador: str) -> float:
+    operacoes = {
+        '+': lambda a, b: a + b,
+        '-': lambda a, b: a - b,
+        '*': lambda a, b: a * b,
+        '/': lambda a, b: "Erro: divisão por zero" if b == 0 else a / b,
+        '**': lambda a, b: a ** b,
+        '%': lambda a, b: "Erro: módulo por zero" if b == 0 else a % b
+    }
+
+    if operador in operacoes:
+        return operacoes[operador](num1, num2)
+
+    return float("nan")
 
 
 if __name__ == "__main__":
@@ -22,6 +54,26 @@ if __name__ == "__main__":
             print('Calculadora')
             print('----------------------------------\n')
 
+            num1 = float(input("Introduza o primeiro número: "))
+            num2 = float(input("Introduza o segundo número: "))
+
+            print("\nOperações disponíveis:")
+            print("+  Soma")
+            print("-  Subtração")
+            print("*  Multiplicação")
+            print("/  Divisão")
+            print("** Exponenciação")
+            print("%  Módulo")
+
+            operador = input("\nEscolha a operação: ")
+
+            resultado1 = calculadora(num1, num2, operador)
+
+            print(f"\nResultado (função 1): {resultado1}")
+
+            continuar = input("\nDeseja continuar? (s/n): ").lower()
+            if continuar != "s":
+                break
 
         except ValueError:
             print('Dados inválidos! -> Tente novamente!')
